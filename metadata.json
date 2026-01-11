@@ -1,0 +1,5 @@
+{
+  "name": "Grit trading Terminal",
+  "description": "A high-performance crypto trading dashboard featuring real-time order books, integrated Binance/Bybit market data, and Gemini-powered market sentiment analysis.",
+  "requestFramePermissions": []
+}
