@@ -7,7 +7,7 @@ interface OrderBookProps {
   asks: OrderBookLevel[];
 }
 
-const OrderBook: React.FC<OrderBookLevel[]> = ({ bids, asks }) => {
+const OrderBook: React.FC<OrderBookProps> = ({ bids, asks }) => {
   const maxTotal = Math.max(
     ...bids.map(b => b.total),
     ...asks.map(a => a.total),

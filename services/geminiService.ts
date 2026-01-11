@@ -2,13 +2,22 @@
 import { GoogleGenAI, Type } from "@google/genai";
 import { OrderBookLevel, MarketTicker } from "../types";
 
-const ai = new GoogleGenAI({ apiKey: process.env.API_KEY });
+// Resilient initialization
+const apiKey = process.env.API_KEY;
+let ai: GoogleGenAI | null = null;
+if (apiKey) {
+  ai = new GoogleGenAI({ apiKey });
+}
 
 export const getMarketAnalysis = async (
   ticker: MarketTicker,
   bids: OrderBookLevel[],
   asks: OrderBookLevel[]
 ) => {
+  if (!ai) {
+    return "AI Module Offline: API_KEY not detected in environment. Please set your key and restart the server.";
+  }
+
   const prompt = `
     Analyze the following crypto market data for ${ticker.pair}:
     - Current Price: ${ticker.lastPrice}
@@ -35,9 +44,9 @@ export const getMarketAnalysis = async (
         topP: 0.95,
       }
     });
-    return response.text;
+    return response.text || "No analysis generated.";
   } catch (error) {
     console.error("Gemini analysis error:", error);
-    return "Unable to perform AI analysis at this time. Please check your connectivity.";
+    return "Unable to perform AI analysis at this time. Please check your connectivity or API project billing.";
   }
 };

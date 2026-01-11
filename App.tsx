@@ -88,7 +88,7 @@ const App: React.FC = () => {
   const [toasts, setToasts] = useState<Toast[]>([]);
   const [priceMap, setPriceMap] = useState<Record<string, { price: number; change: number }>>({});
   
-  const [activeExchangeId, setActiveExchangeId] = useState<ExchangeId>('nexus');
+  const [activeExchangeId, setActiveExchangeId] = useState<ExchangeId>('binance');
   
   const [exchanges, setExchanges] = useState<ExchangeConfig[]>([
     { id: 'binance', apiKey: '', apiSecret: '', connected: false, isTestnet: false },
@@ -348,10 +348,7 @@ const App: React.FC = () => {
               ...ex, apiKey: k, apiSecret: s, proxyUrl: p_url, isTestnet: !!is_test, connected: true, passphrase 
             } : ex));
             
-            if (activeExchangeId === 'nexus') {
-              setActiveExchangeId(id as ExchangeId);
-            }
-            
+            setActiveExchangeId(id as ExchangeId);
             setActiveModal(null);
             addToast(`${id.toUpperCase()} Linked`, "success", `Terminal node active.`);
           }}
